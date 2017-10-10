@@ -1,0 +1,42 @@
+{
+    "name": "swagen-csharp-language",
+    "version": "1.0.0-beta.2",
+    "description": "C# language helpers for Swagen generators",
+    "main": "./lib/index.js",
+    "typings": "./lib/index.d.ts",
+    "scripts": {
+        "watch": "tsc --watch",
+        "build": "tsc && npm run docs",
+        "lint": "tslint --project tsconfig.json --format verbose",
+        "docs": "jsdoc2md ./lib/index.js > ./docs/API.md",
+        "bump": "npm version prerelease --no-git-tag-version",
+        "prepublishOnly": "npm run build && npm run lint",
+        "postpublish": "npm run bump",
+        "test-harness": "tsc --project ./test-harness/tsconfig.json && node ./test-harness/index"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/swagen/swagen-csharp-language.git"
+    },
+    "keywords": [
+        "swagen",
+        "swagen-language",
+        "csharp"
+    ],
+    "author": "Swagen <swagen@jeevanjames.com>",
+    "license": "Apache-2.0",
+    "bugs": {
+        "url": "https://github.com/swagen/swagen-csharp-language/issues"
+    },
+    "homepage": "https://github.com/swagen/swagen-csharp-language#readme",
+    "dependencies": {
+        "lodash": "^4.17.4"
+    },
+    "devDependencies": {
+        "@types/node": "^8.0.33",
+        "jsdoc-to-markdown": "^3.0.0",
+        "swagen": "^1.0.0-beta.43",
+        "tslint": "^5.7.0",
+        "typescript": "^2.5.3"
+    }
+}
