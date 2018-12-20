@@ -8,6 +8,10 @@ export class CSharpLanguage {
     ) {
     }
 
+    /**
+     * Generates a file header based on the Swagen profile and definition details.
+     * @returns {string[]} A string array of the lines in the generated header
+     */
     public buildHeader(): string[] {
         const header = [
             `// ------------------------------`,
@@ -68,6 +72,9 @@ export class CSharpLanguage {
             typeName = this.prefixNamespace(property.enum);
         } else {
             throw new Error(`Cannot understand type of property in definition: ${JSON.stringify(property, null, 4)}`);
+        }
+        if (!property.isArray) {
+            return typeName;
         }
         switch (this.options.collectionType || 'IReadOnlyList') {
             case 'IReadOnlyList': return `IReadOnlyList<${typeName}>`;
