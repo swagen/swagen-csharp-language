@@ -62,14 +62,14 @@ export class CSharpLanguage {
         return comments;
     }
 
-    public getDataType(property: DataType): string {
+    public getDataType(property: DataType, skipPrefix: boolean = false): string {
         let typeName: string;
         if (property.primitive) {
             typeName = this.getPrimitiveTypeName(property);
         } else if (property.complex) {
-            typeName = this.prefixNamespace(property.complex);
+            typeName = this.prefixNamespace(property.complex, skipPrefix);
         } else if (property.enum) {
-            typeName = this.prefixNamespace(property.enum);
+            typeName = this.prefixNamespace(property.enum, skipPrefix);
         } else {
             throw new Error(`Cannot understand type of property in definition: ${JSON.stringify(property, null, 4)}`);
         }
@@ -87,17 +87,25 @@ export class CSharpLanguage {
     private getPrimitiveTypeName(property: DataType): string {
         switch (property.primitive) {
             case 'integer':
-                return 'long';
+                switch (property.subType) {
+                    case 'int32':
+                        return 'int';
+                    case 'int64':
+                        return 'long';
+                    default:
+                        return 'int';
+                }
             case 'number':
-                return 'decimal';
+                return property.subType || 'double';
             case 'string': {
                 switch (property.subType) {
                     case 'date-time':
+                    case 'date':
                         return 'DateTime';
                     case 'uuid':
-                        return 'Guid';
                     case 'byte':
-                        return 'byte';
+                    case 'password':
+                        return 'string';
                     default:
                         return 'string';
                 }
@@ -107,12 +115,14 @@ export class CSharpLanguage {
             case 'file':
             case 'object':
                 return 'object';
+            case 'array':
+                return 'object[]';
             default:
                 throw new Error(`Cannot translate primitive type ${JSON.stringify(property, null, 4)}`);
-        }
+            }
     }
-    private prefixNamespace(name: string): string {
-        return this.options.modelNamespace ? `${this.options.modelNamespace}.${name}` : name;
+    private prefixNamespace(name: string, skipPrefix: boolean): string {
+        return skipPrefix ? name : `__models.${name}`;
     }
 
     public getMethodSignature(operationName: string, operation: OperationDefinition, options: {
