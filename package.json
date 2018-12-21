@@ -1,6 +1,6 @@
 {
     "name": "swagen-csharp-language",
-    "version": "1.0.0-beta.3",
+    "version": "1.0.0-beta.4",
     "description": "C# language helpers for Swagen generators",
     "main": "./lib/index.js",
     "typings": "./lib/index.d.ts",

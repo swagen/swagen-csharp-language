@@ -10,7 +10,7 @@ export declare class CSharpLanguage {
      */
     buildHeader(): string[];
     buildOperationDocComments(operation: OperationDefinition): string[];
-    getDataType(property: DataType): string;
+    getDataType(property: DataType, skipPrefix?: boolean): string;
     private getPrimitiveTypeName;
     private prefixNamespace;
     getMethodSignature(operationName: string, operation: OperationDefinition, options: {
