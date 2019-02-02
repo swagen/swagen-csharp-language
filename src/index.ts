@@ -103,6 +103,7 @@ export class CSharpLanguage {
                     case 'date':
                         return 'DateTime';
                     case 'uuid':
+                        return 'Guid';
                     case 'byte':
                     case 'password':
                         return 'string';

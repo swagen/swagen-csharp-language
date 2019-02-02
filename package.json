@@ -1,6 +1,6 @@
 {
     "name": "swagen-csharp-language",
-    "version": "1.0.0-beta.4",
+    "version": "1.0.0-beta.5",
     "description": "C# language helpers for Swagen generators",
     "main": "./lib/index.js",
     "typings": "./lib/index.d.ts",
@@ -11,8 +11,7 @@
         "docs": "jsdoc2md ./lib/index.js > ./docs/API.md",
         "bump": "npm version prerelease --no-git-tag-version",
         "prepublishOnly": "npm run build && npm run lint",
-        "postpublish": "npm run bump",
-        "test-harness": "tsc --project ./test-harness/tsconfig.json && node ./test-harness/index"
+        "postpublish": "npm run bump"
     },
     "repository": {
         "type": "git",
