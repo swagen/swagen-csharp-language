@@ -10,7 +10,7 @@ export declare class CSharpLanguage {
      */
     buildHeader(): string[];
     buildOperationDocComments(operation: OperationDefinition): string[];
-    getDataType(property: DataType, skipPrefix?: boolean): string;
+    getDataType(property: DataType): string;
     private getPrimitiveTypeName;
     private prefixNamespace;
     getMethodSignature(operationName: string, operation: OperationDefinition, options: {
@@ -21,5 +21,6 @@ export declare class CSharpLanguage {
 }
 export interface CSharpLanguageOptions {
     modelNamespace?: string;
+    skipModelPrefix?: boolean;
     collectionType?: 'IReadOnlyList' | 'Array' | 'IList';
 }

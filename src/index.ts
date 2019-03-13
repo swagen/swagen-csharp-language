@@ -62,14 +62,14 @@ export class CSharpLanguage {
         return comments;
     }
 
-    public getDataType(property: DataType, skipPrefix: boolean = false): string {
+    public getDataType(property: DataType): string {
         let typeName: string;
         if (property.primitive) {
             typeName = this.getPrimitiveTypeName(property);
         } else if (property.complex) {
-            typeName = this.prefixNamespace(property.complex, skipPrefix);
+            typeName = this.prefixNamespace(property.complex);
         } else if (property.enum) {
-            typeName = this.prefixNamespace(property.enum, skipPrefix);
+            typeName = this.prefixNamespace(property.enum);
         } else {
             throw new Error(`Cannot understand type of property in definition: ${JSON.stringify(property, null, 4)}`);
         }
@@ -122,8 +122,9 @@ export class CSharpLanguage {
                 throw new Error(`Cannot translate primitive type ${JSON.stringify(property, null, 4)}`);
             }
     }
-    private prefixNamespace(name: string, skipPrefix: boolean): string {
-        return skipPrefix ? name : `__models.${name}`;
+
+    private prefixNamespace(name: string): string {
+        return this.options.skipModelPrefix ? name : `__models.${name}`;
     }
 
     public getMethodSignature(operationName: string, operation: OperationDefinition, options: {
@@ -136,7 +137,7 @@ export class CSharpLanguage {
             if (accumulate) {
                 accumulate += ', ';
             }
-            accumulate += `${parameter.name}: ${this.getDataType(parameter.dataType)}`;
+            accumulate += `${this.getDataType(parameter.dataType)} ${parameter.name}`;
             return accumulate;
         }, '');
 
@@ -145,7 +146,7 @@ export class CSharpLanguage {
             returnType = options.returnTypeFormatter(returnType);
         }
 
-        const methodSig = `${accessor} ${returnType} ${operationName}(${parameters})`;
+        const methodSig = `${accessor ? accessor + ' ' : ''}${returnType} ${operationName}(${parameters})`;
         return methodSig;
     }
 
@@ -169,5 +170,6 @@ export class CSharpLanguage {
 
 export interface CSharpLanguageOptions {
     modelNamespace?: string;
+    skipModelPrefix?: boolean;
     collectionType?: 'IReadOnlyList' | 'Array' | 'IList';
 }
