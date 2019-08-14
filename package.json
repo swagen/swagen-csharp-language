@@ -1,6 +1,6 @@
 {
     "name": "swagen-csharp-language",
-    "version": "1.0.0-beta.8",
+    "version": "1.0.0-beta.9",
     "description": "C# language helpers for Swagen generators",
     "main": "./lib/index.js",
     "typings": "./lib/index.d.ts",
@@ -29,13 +29,13 @@
     },
     "homepage": "https://github.com/swagen/swagen-csharp-language#readme",
     "dependencies": {
-        "lodash": "^4.17.11"
+        "lodash": "^4.17.15"
     },
     "devDependencies": {
-        "@types/node": "^11.12.2",
-        "jsdoc-to-markdown": "^4.0.1",
-        "swagen": "^1.0.0-beta.52",
-        "tslint": "^5.14.0",
-        "typescript": "^3.4.1"
+        "@types/node": "^12.7.1",
+        "jsdoc-to-markdown": "^5.0.0",
+        "swagen": "^1.0.0-beta.53",
+        "tslint": "^5.18.0",
+        "typescript": "^3.5.3"
     }
 }
